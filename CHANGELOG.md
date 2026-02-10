@@ -3,6 +3,21 @@ Sistema de Cálculo Hidráulico para Bombas de Pulpa
 
 Todos los cambios notables en este proyecto se documentarán en este archivo.
 
+## [Versión 2.0.4] - 2026-02-10
+
+### CORREGIDO (Crítico - Gráficos en Resultados)
+- **Variable TDHs no definida**: Agregado cálculo de TDHs para curva de bomba
+- **Variable NPSHrs no definida**: Agregado cálculo de NPSHrs para curva de bomba
+- **Contexto**: Errores ocurrían al mostrar resultados en Paso 7
+- **Solución**: Implementados cálculos de interpolación y fallback para ambas variables
+
+### DETALLES TÉCNICOS
+- `scripts/ui.js`: Agregada generación de array `TDHs` con interpolación desde curve_points
+- `scripts/ui.js`: Agregada generación de array `NPSHrs` con interpolación desde curve_points
+- Ambas implementaciones incluyen fallback a cálculos aproximados si no hay puntos de curva
+
+---
+
 ## [Versión 2.0.3] - 2026-02-10
 
 ### CORREGIDO (Crítico - TypeError en UI)

@@ -1925,6 +1925,46 @@ const StepManager = {
 
         const flows = flows_L_s.map(f => State.L_sToFlow(f));
 
+        // Calcular TDHs de la curva de la bomba
+        const TDHs = flows_L_s.map(flow_L_s => {
+            if (curvePoints.length > 0) {
+                // Interpolar desde puntos de curva existentes
+                const point = curvePoints.find(p => Math.abs(p.flow - flow_L_s) < 0.1);
+                if (point) return point.TDH;
+                // Interpolación lineal simple
+                for (let i = 0; i < curvePoints.length - 1; i++) {
+                    if (flow_L_s >= curvePoints[i].flow && flow_L_s <= curvePoints[i + 1].flow) {
+                        const t = (flow_L_s - curvePoints[i].flow) / (curvePoints[i + 1].flow - curvePoints[i].flow);
+                        return curvePoints[i].TDH + t * (curvePoints[i + 1].TDH - curvePoints[i].TDH);
+                    }
+                }
+            }
+            // Fallback: aproximación parabólica desde punto de diseño
+            const designTDH = results.TDH.pump || results.TDH.system || 40;
+            const designFlow = results.pump.flow || State.get('process.flow');
+            return designTDH * (1 - 0.3 * Math.pow(flow_L_s / designFlow - 1, 2));
+        });
+
+        // Calcular NPSHrs de la curva de la bomba
+        const NPSHrs = flows_L_s.map(flow_L_s => {
+            if (curvePoints.length > 0) {
+                // Interpolar desde puntos de curva existentes
+                const point = curvePoints.find(p => Math.abs(p.flow - flow_L_s) < 0.1);
+                if (point) return point.NPSHr;
+                // Interpolación lineal simple
+                for (let i = 0; i < curvePoints.length - 1; i++) {
+                    if (flow_L_s >= curvePoints[i].flow && flow_L_s <= curvePoints[i + 1].flow) {
+                        const t = (flow_L_s - curvePoints[i].flow) / (curvePoints[i + 1].flow - curvePoints[i].flow);
+                        return curvePoints[i].NPSHr + t * (curvePoints[i + 1].NPSHr - curvePoints[i].NPSHr);
+                    }
+                }
+            }
+            // Fallback: NPSHr aumenta con el flujo
+            const designNPSHr = results.NPSH.required || 3;
+            const designFlow = results.pump.flow || State.get('process.flow');
+            return designNPSHr * Math.pow(flow_L_s / designFlow, 2);
+        });
+
         // Curva del sistema
         const systemCurve = flows_L_s.map(flow_L_s => {
             // Aproximación: TDH ∝ Q²
