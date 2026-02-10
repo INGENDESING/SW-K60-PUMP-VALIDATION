@@ -1032,14 +1032,20 @@ const StepManager = {
         };
 
         if (normSelect) normSelect.addEventListener('change', () => {
+            // Guardar en State ANTES de actualizar UI
+            State.set(`${section}.norm`, normSelect.value);
             updateScheduleOptions();
             this.updateSummary(); // Actualizar resumen cuando cambie norma
         });
         if (nominalSelect) nominalSelect.addEventListener('change', () => {
+            // Guardar en State ANTES de actualizar UI
+            State.set(`${section}.nominal`, nominalSelect.value);
             updateDimensions();
             this.updateSummary(); // Actualizar resumen cuando cambie diámetro
         });
         if (scheduleSelect) scheduleSelect.addEventListener('change', () => {
+            // Guardar en State ANTES de actualizar UI
+            State.set(`${section}.schedule`, scheduleSelect.value);
             updateDimensions();
             this.updateSummary(); // Actualizar resumen cuando cambie cédula
         });
@@ -1485,33 +1491,54 @@ const StepManager = {
         const summary = State.getSummary();
         const summaryContainer = document.getElementById('dataSummary');
 
-        if (summaryContainer && summary.pulpName) {
-            // Convertir flujo a la unidad seleccionada
-            const flowDisplay = State.L_sToFlow(summary.flow || 0);
-            const flowUnitLabel = State.getFlowUnitLabel();
+        if (!summaryContainer) return;
 
-            summaryContainer.innerHTML = `
+        // Convertir flujo a la unidad seleccionada
+        const flowDisplay = State.L_sToFlow(summary.flow || 0);
+        const flowUnitLabel = State.getFlowUnitLabel();
+
+        // Construir HTML del resumen - mostrar datos disponibles
+        let summaryHTML = '';
+
+        // Mostrar pulpa si existe
+        if (summary.pulpName && summary.pulpName !== 'N/A') {
+            summaryHTML += `
                 <div class="data-summary-item">
                     <span class="data-summary-label">Pulpa:</span>
                     <span class="data-summary-value">${summary.pulpName}</span>
-                </div>
+                </div>`;
+        }
+
+        // Mostrar consistencia si existe
+        if (summary.consistency > 0) {
+            summaryHTML += `
                 <div class="data-summary-item">
                     <span class="data-summary-label">Consistencia:</span>
                     <span class="data-summary-value">${summary.consistency}%</span>
-                </div>
+                </div>`;
+        }
+
+        // Mostrar flujo si existe
+        if (summary.flow > 0) {
+            summaryHTML += `
                 <div class="data-summary-item">
                     <span class="data-summary-label">Flujo:</span>
                     <span class="data-summary-value">${flowDisplay.toFixed(1)} ${flowUnitLabel}</span>
-                </div>
-                <div class="data-summary-item">
-                    <span class="data-summary-label">Succión:</span>
-                    <span class="data-summary-value">${summary.suctionDiameter}"</span>
-                </div>
-                <div class="data-summary-item">
-                    <span class="data-summary-label">Descarga:</span>
-                    <span class="data-summary-value">${summary.dischargeDiameter}"</span>
-                </div>
-            `;
+                </div>`;
+        }
+
+        // Siempre mostrar diámetros (pueden estar seleccionados aún sin pulpa)
+        summaryHTML += `
+            <div class="data-summary-item">
+                <span class="data-summary-label">Succión:</span>
+                <span class="data-summary-value">${summary.suctionDiameter}"</span>
+            </div>
+            <div class="data-summary-item">
+                <span class="data-summary-label">Descarga:</span>
+                <span class="data-summary-value">${summary.dischargeDiameter}"</span>
+            </div>`;
+
+        summaryContainer.innerHTML = summaryHTML;
         }
     },
 

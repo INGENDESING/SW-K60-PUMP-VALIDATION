@@ -3,6 +3,25 @@ Sistema de Cálculo Hidráulico para Bombas de Pulpa
 
 Todos los cambios notables en este proyecto se documentarán en este archivo.
 
+## [Versión 2.0.7] - 2026-02-10
+
+### CORREGIDO (UX - Sidebar y Selectores de Tubería)
+- **Problema 1**: El sidebar "Datos Ingresados" no se actualizaba al cambiar diámetros
+- **Problema 2**: Al añadir accesorios, el diámetro seleccionado se reseteaba automáticamente
+
+### DETALLES TÉCNICOS
+- **Causa Problema 1**: `updateSummary()` solo se ejecutaba si `summary.pulpName` existía
+  - **Solución**: Modificada la lógica para mostrar siempre los datos disponibles
+- **Causa Problema 2**: Los selectores norm/nominal/schedule no guardaban valores en State
+  - **Solución**: Agregadas llamadas a `State.set()` en los event listeners de cambio
+
+### ARCHIVOS MODIFICADOS
+- `scripts/ui.js`:
+  - `updateSummary()`: Refactorizada para mostrar datos progresivamente
+  - `initPipeEvents()`: Agregadas llamadas a `State.set()` para norm, nominal, schedule
+
+---
+
 ## [Versión 2.0.6] - 2026-02-10
 
 ### CORREGIDO (ReferenceError - Variable flowUnitLabel)
