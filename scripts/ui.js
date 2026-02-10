@@ -1828,6 +1828,9 @@ const StepManager = {
 
         if (!ctxTDH || !ctxNPSH) return;
 
+        // Obtener etiqueta de unidad de flujo para los gráficos
+        const flowUnitLabel = State.getFlowUnitLabel();
+
         // Destruir gráficos anteriores si existen
         if (this.chartTDH) this.chartTDH.destroy();
         if (this.chartNPSH) this.chartNPSH.destroy(); // Changed from chartSystem to chartNPSH

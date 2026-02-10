@@ -3,6 +3,20 @@ Sistema de Cálculo Hidráulico para Bombas de Pulpa
 
 Todos los cambios notables en este proyecto se documentarán en este archivo.
 
+## [Versión 2.0.6] - 2026-02-10
+
+### CORREGIDO (ReferenceError - Variable flowUnitLabel)
+- **Variable no definida**: Agregada definición de flowUnitLabel en renderCharts()
+- **Contexto**: Error ocurría al mostrar gráficos en Paso 7 (Resultados)
+- **Error**: `Uncaught ReferenceError: flowUnitLabel is not defined`
+
+### DETALLES TÉCNICOS
+- `scripts/ui.js`: Agregada `const flowUnitLabel = State.getFlowUnitLabel();` en renderCharts()
+- La variable se usa para etiquetar el eje X de los gráficos TDH y NPSH
+- Misma solución ya utilizada en otras funciones del mismo archivo
+
+---
+
 ## [Versión 2.0.5] - 2026-02-10
 
 ### MEJORADO (UX - Actualización de Resumen)
