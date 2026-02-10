@@ -3,6 +3,20 @@ Sistema de Cálculo Hidráulico para Bombas de Pulpa
 
 Todos los cambios notables en este proyecto se documentarán en este archivo.
 
+## [Versión 2.0.5] - 2026-02-10
+
+### MEJORADO (UX - Actualización de Resumen)
+- **Actualización de resumen**: Agregadas llamadas a updateSummary() al añadir/eliminar accesorios
+- **Actualización de resumen**: Agregadas llamadas a updateSummary() al cambiar diámetro/norma/cédula
+- **Contexto**: El resumen en el sidebar no se actualizaba automáticamente con los cambios
+
+### DETALLES TÉCNICOS
+- `scripts/ui.js`: showFittingDialog() - Agregada llamada a updateSummary() después de añadir accesorio
+- `scripts/ui.js`: remove-fitting-btn event - Agregada llamada a updateSummary() después de eliminar
+- `scripts/ui.js`: initPipeEvents() - Agregadas llamadas a updateSummary() en cambios de selectors
+
+---
+
 ## [Versión 2.0.4] - 2026-02-10
 
 ### CORREGIDO (Crítico - Gráficos en Resultados)

@@ -1031,9 +1031,18 @@ const StepManager = {
             updateDimensions();
         };
 
-        if (normSelect) normSelect.addEventListener('change', updateScheduleOptions);
-        if (nominalSelect) nominalSelect.addEventListener('change', updateDimensions);
-        if (scheduleSelect) scheduleSelect.addEventListener('change', updateDimensions);
+        if (normSelect) normSelect.addEventListener('change', () => {
+            updateScheduleOptions();
+            this.updateSummary(); // Actualizar resumen cuando cambie norma
+        });
+        if (nominalSelect) nominalSelect.addEventListener('change', () => {
+            updateDimensions();
+            this.updateSummary(); // Actualizar resumen cuando cambie diámetro
+        });
+        if (scheduleSelect) scheduleSelect.addEventListener('change', () => {
+            updateDimensions();
+            this.updateSummary(); // Actualizar resumen cuando cambie cédula
+        });
 
         // También actualizar cuando cambie el flujo (usamos el evento personalizado)
         if (flowInput) {
@@ -1059,6 +1068,7 @@ const StepManager = {
                 const fittingId = btn.dataset.fittingId;
                 State.removeFitting(section, fittingId);
                 this.renderCurrentStep();
+                this.updateSummary(); // Actualizar resumen en sidebar
             }
         });
     },
@@ -1115,6 +1125,7 @@ const StepManager = {
                             K: fittingData.K_typical
                         });
                         this.renderCurrentStep();
+                        this.updateSummary(); // Actualizar resumen en sidebar
                     }
 
                     modal.classList.remove('active');
