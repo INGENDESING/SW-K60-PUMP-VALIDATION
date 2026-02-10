@@ -3,6 +3,22 @@ Sistema de Cálculo Hidráulico para Bombas de Pulpa
 
 Todos los cambios notables en este proyecto se documentarán en este archivo.
 
+## [Versión 2.0.1] - 2026-02-10
+
+### CORREGIDO (Crítico - Errores de JavaScript)
+- **Duplicación PHYSICAL_CONSTANTS**: Eliminada duplicación de constantes físicas entre utils.js y propiedades.js
+- **Duplicación calculateVelocity()**: Eliminada función duplicada en propiedades.js
+- **Exportaciones faltantes**: Agregada exportación de calculateModifiedReynolds y calculateVelocity en calculations.js
+- **Referencias rotas**: Eliminadas referencias a PHYSICAL_CONSTANTS en exportaciones de propiedades.js
+
+### CAMBIOS TÉCNICOS
+- `data/propiedades.js`: Eliminadas líneas 204-270 (objeto PHYSICAL_CONSTANTS completo)
+- `data/propiedades.js`: Eliminada función calculateVelocity() (duplicada)
+- `data/propiedades.js`: Limpiadas exportaciones (eliminadas referencias a constantes eliminadas)
+- `scripts/calculations.js`: Agregadas exportaciones faltantes (calculateModifiedReynolds, calculateVelocity)
+
+---
+
 ## [Versión 2.0.0] - 2026-02-10
 
 ### CORREGIDO (Crítico)

@@ -201,73 +201,7 @@ const AIR_SOLUBILITY = {
     100: 5.8
 };
 
-// Constantes físicas
-const PHYSICAL_CONSTANTS = {
-    // Gravedad estándar
-    g: 9.80665,              // m/s²
-
-    // Presión atmosférica estándar
-    P_atm: 101.325,          // kPa
-
-    // Constante universal de los gases
-    R: 8.31446,              // J/(mol·K)
-
-    // Conversión de temperatura
-    K_from_C: (temp_c) => temp_c + 273.15,
-    C_from_K: (temp_k) => temp_k - 273.15,
-    F_from_C: (temp_c) => temp_c * 9/5 + 32,
-    C_from_F: (temp_f) => (temp_f - 32) * 5/9,
-
-    // Conversiones de presión
-    kPa_to_Pa: (kpa) => kpa * 1000,
-    Pa_to_kPa: (pa) => pa / 1000,
-    bar_to_kPa: (bar) => bar * 100,
-    kPa_to_bar: (kpa) => kpa / 100,
-    psi_to_kPa: (psi) => psi * 6.89476,
-    kPa_to_psi: (kpa) => kpa / 6.89476,
-    mmHg_to_kPa: (mmhg) => mmhg * 0.133322,
-    kPa_to_mmHg: (kpa) => kpa / 0.133322,
-
-    // Conversiones de flujo
-    L_s_to_gpm: (l_s) => l_s * 15.8503,
-    gpm_to_L_s: (gpm) => gpm / 15.8503,
-    L_s_to_m3_h: (l_s) => l_s * 3.6,
-    m3_h_to_L_s: (m3_h) => m3_h / 3.6,
-    m3_h_to_gpm: (m3_h) => m3_h * 4.40287,
-    gpm_to_m3_h: (gpm) => gpm / 4.40287,
-    // Conversion desde L/s a cualquier unidad
-    L_s_to_flowUnit: (l_s, unit) => {
-        switch(unit) {
-            case 'm3_h': return l_s * 3.6;
-            case 'gpm': return l_s * 15.8503;
-            case 'L_s': return l_s;
-            default: return l_s;
-        }
-    },
-    // Conversión desde cualquier unidad a L/s
-    flowUnit_to_L_s: (value, unit) => {
-        switch(unit) {
-            case 'm3_h': return value / 3.6;
-            case 'gpm': return value / 15.8503;
-            case 'L_s': return value;
-            default: return value;
-        }
-    },
-
-    // Conversiones de longitud
-    m_to_ft: (m) => m * 3.28084,
-    ft_to_m: (ft) => ft / 3.28084,
-    mm_to_in: (mm) => mm / 25.4,
-    in_to_mm: (inches) => inches * 25.4,
-
-    // Conversiones de potencia
-    kW_to_HP: (kw) => kw * 1.34102,
-    HP_to_kW: (hp) => hp / 1.34102,
-
-    // Conversiones de energía/tensión
-    N_m_to_ft_lbf: (nm) => nm * 0.737562,
-    ft_lbf_to_N_m: (ftlbf) => ftlbf / 0.737562
-};
+// NOTA: PHYSICAL_CONSTANTS se exporta desde scripts/utils.js para evitar duplicación
 
 // Función para obtener propiedades del agua a una temperatura dada
 function getWaterProperties(temp_c) {
@@ -383,14 +317,7 @@ function calculateReynolds(density, velocity, diameter, viscosity) {
     return (density * velocity * diameter) / viscosity;
 }
 
-// Función para calcular velocidad desde flujo y área
-function calculateVelocity(flow_rate_L_s, diameter_mm) {
-    const flow_m3_s = flow_rate_L_s / 1000;
-    const diameter_m = diameter_mm / 1000;
-    const area_m2 = Math.PI * Math.pow(diameter_m / 2, 2);
-
-    return flow_m3_s / area_m2; // m/s
-}
+// NOTA: calculateVelocity se exporta desde scripts/calculations.js con validaciones defensivas
 
 // Función para calcular flujo desde velocidad y área
 function calculateFlowRate(velocity_m_s, diameter_mm) {
@@ -416,19 +343,10 @@ if (typeof window !== 'undefined') {
     window.getAirSolubility = getAirSolubility;
     window.calculateSpecificWeight = calculateSpecificWeight;
     window.calculateReynolds = calculateReynolds;
-    window.calculateVelocity = calculateVelocity;
+    // NOTA: calculateVelocity se exporta desde scripts/calculations.js
     window.calculateFlowRate = calculateFlowRate;
     window.calculatePipeArea = calculatePipeArea;
     window.WATER_PROPERTIES = WATER_PROPERTIES;
     window.AIR_SOLUBILITY = AIR_SOLUBILITY;
-    window.PHYSICAL_CONSTANTS = PHYSICAL_CONSTANTS;
-    // Funciones de conversión de flujo
-    window.L_s_to_flowUnit = PHYSICAL_CONSTANTS.L_s_to_flowUnit;
-    window.flowUnit_to_L_s = PHYSICAL_CONSTANTS.flowUnit_to_L_s;
-    window.L_s_to_m3_h = PHYSICAL_CONSTANTS.L_s_to_m3_h;
-    window.m3_h_to_L_s = PHYSICAL_CONSTANTS.m3_h_to_L_s;
-    window.L_s_to_gpm = PHYSICAL_CONSTANTS.L_s_to_gpm;
-    window.gpm_to_L_s = PHYSICAL_CONSTANTS.gpm_to_L_s;
-    window.m3_h_to_gpm = PHYSICAL_CONSTANTS.m3_h_to_gpm;
-    window.gpm_to_m3_h = PHYSICAL_CONSTANTS.gpm_to_m3_h;
+    // NOTA: PHYSICAL_CONSTANTS se exporta desde scripts/utils.js
 }

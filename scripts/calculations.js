@@ -855,7 +855,9 @@ if (typeof window !== 'undefined') {
     window.calculateFrictionFactor = calculateFrictionFactor;
     window.calculatePulpFrictionFactor = calculatePulpFrictionFactor;
     window.calculateReynolds = calculateReynolds;
+    window.calculateModifiedReynolds = calculateModifiedReynolds;
     window.calculateApparentViscosity = calculateApparentViscosity;
+    window.calculateVelocity = calculateVelocity;
     window.calculateFrictionLoss = calculateFrictionLoss;
     window.calculateMinorLosses = calculateMinorLosses;
     window.calculateNPSHd = calculateNPSHd;
