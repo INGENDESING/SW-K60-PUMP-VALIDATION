@@ -580,11 +580,31 @@ const StepManager = {
     getStep5Template() {
         const curvePoints = State.get('pump.curve_points') || [];
         const flowUnitLabel = State.getFlowUnitLabel();
+        const pump = State.get('pump') || {};
 
         return `
             <div class="curve-section fade-in">
                 <h2>Curva Característica de la Bomba</h2>
                 <p class="text-secondary">Ingrese los puntos de la curva característica H-Q de la bomba</p>
+
+                <!-- Tarjeta de Información del Impulsor -->
+                <div class="impeller-info-card" style="background: rgba(30, 30, 40, 0.5); border: 1px solid rgba(0, 191, 165, 0.3); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 1rem 0; font-size: 1.1rem; color: var(--accent-primary);">Impulsor Actual</h3>
+                    <div class="impeller-specs" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                        <div class="spec-item" style="display: flex; flex-direction: column; gap: 0.25rem;">
+                            <span class="spec-label" style="font-size: 0.875rem; color: var(--text-secondary);">Diámetro:</span>
+                            <span class="spec-value" style="font-size: 1.25rem; font-weight: bold; color: var(--accent-primary);">${pump.impeller_diameter || '--'} mm</span>
+                        </div>
+                        <div class="spec-item" style="display: flex; flex-direction: column; gap: 0.25rem;">
+                            <span class="spec-label" style="font-size: 0.875rem; color: var(--text-secondary);">Velocidad:</span>
+                            <span class="spec-value" style="font-size: 1.25rem; font-weight: bold; color: var(--accent-primary);">${pump.rpm || '--'} RPM</span>
+                        </div>
+                        <div class="spec-item" style="display: flex; flex-direction: column; gap: 0.25rem;">
+                            <span class="spec-label" style="font-size: 0.875rem; color: var(--text-secondary);">Tipo:</span>
+                            <span class="spec-value" style="font-size: 1.25rem; font-weight: bold; color: var(--text-primary);">${pump.type || 'Centrífuga'}</span>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="curve-inputs">
                     <div class="form-group">
@@ -630,6 +650,71 @@ const StepManager = {
                             </svg>
                             Agregar Punto
                         </button>
+                    </div>
+                </div>
+
+                <!-- Sección de Reglas de Afinidad -->
+                <div class="impeller-modifier-card" style="background: rgba(30, 30, 40, 0.5); border: 1px solid rgba(0, 191, 165, 0.3); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <h3 style="margin: 0 0 0.5rem 0; font-size: 1.1rem; color: var(--accent-primary); display: flex; align-items: center; gap: 0.5rem;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+                        </svg>
+                        Reglas de Afinidad - Modificar Impulsor
+                    </h3>
+                    <p class="text-secondary" style="margin: 0 0 1rem 0; font-size: 0.9rem;">Cambie el diámetro del impulsor para recalcular la curva (RPM constantes)</p>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Diámetro Original (mm)</label>
+                            <input type="number" class="input" id="original_impeller"
+                                   value="${pump.impeller_diameter || 300}" disabled
+                                   style="background: rgba(255, 255, 255, 0.05); cursor: not-allowed;">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Nuevo Diámetro (mm)</label>
+                            <input type="number" class="input" id="new_impeller"
+                                   value="${pump.impeller_diameter || 300}"
+                                   min="${(pump.impeller_diameter || 300) * 0.7}"
+                                   max="${(pump.impeller_diameter || 300) * 1.2}"
+                                   step="1">
+                            <small class="form-hint">Rango típico: 70% - 120% del original</small>
+                        </div>
+
+                        <div class="form-group" style="display: flex; align-items: flex-end;">
+                            <button class="btn btn-primary" id="applyAffinityLaws" style="width: 100%;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 0.5rem;">
+                                    <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83"/>
+                                </svg>
+                                Aplicar Reglas de Afinidad
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="affinity-results" id="affinityResults" style="display: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                        <h4 style="margin: 0 0 1rem 0; font-size: 1rem; color: var(--accent-primary);">Resultado de Recálculo</h4>
+                        <div class="results-summary" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1rem 0;">
+                            <div class="result-item" style="background: rgba(0, 191, 165, 0.1); padding: 0.75rem; border-radius: 4px; text-align: center;">
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Cambio en Diámetro</div>
+                                <div class="result-value" id="diameterChange" style="font-weight: bold; color: var(--accent-primary);">-</div>
+                            </div>
+                            <div class="result-item" style="background: rgba(0, 191, 165, 0.1); padding: 0.75rem; border-radius: 4px; text-align: center;">
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Cambio en TDH (est.)</div>
+                                <div class="result-value" id="tdhChange" style="font-weight: bold; color: var(--accent-primary);">-</div>
+                            </div>
+                            <div class="result-item" style="background: rgba(0, 191, 165, 0.1); padding: 0.75rem; border-radius: 4px; text-align: center;">
+                                <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.25rem;">Cambio en Potencia (est.)</div>
+                                <div class="result-value" id="powerChange" style="font-weight: bold; color: var(--accent-primary);">-</div>
+                            </div>
+                        </div>
+                        <div class="confirmation-actions" style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+                            <button class="btn btn-success" id="confirmAffinity" style="flex: 1; max-width: 200px;">
+                                ✓ Confirmar y Reemplazar Curva
+                            </button>
+                            <button class="btn btn-secondary" id="cancelAffinity" style="flex: 1; max-width: 200px;">
+                                ✗ Cancelar
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -1338,6 +1423,94 @@ const StepManager = {
                 this.renderCurrentStep();
             };
         });
+
+        // ===== REGLAS DE AFINIDAD =====
+        const applyAffinityBtn = document.getElementById('applyAffinityLaws');
+        const confirmAffinityBtn = document.getElementById('confirmAffinity');
+        const cancelAffinityBtn = document.getElementById('cancelAffinity');
+        const newImpellerInput = document.getElementById('new_impeller');
+
+        // Variable temporal para almacenar la curva recalculada
+        let recalculatedCurve = null;
+
+        if (applyAffinityBtn) {
+            applyAffinityBtn.onclick = () => {
+                const originalDiameter = parseFloat(document.getElementById('original_impeller').value);
+                const newDiameter = parseFloat(newImpellerInput.value);
+
+                if (!newDiameter || newDiameter <= 0) {
+                    alert('Por favor ingrese un diámetro válido');
+                    return;
+                }
+
+                if (newDiameter === originalDiameter) {
+                    alert('El nuevo diámetro debe ser diferente al original');
+                    return;
+                }
+
+                // Obtener curva actual
+                const currentCurve = State.get('pump.curve_points') || [];
+
+                if (currentCurve.length === 0) {
+                    alert('No hay puntos de curva para recalcular. Agregue puntos primero.');
+                    return;
+                }
+
+                // Aplicar reglas de afinidad
+                recalculatedCurve = applyAffinityLaws(currentCurve, originalDiameter, newDiameter);
+
+                // Mostrar resultados
+                const diameterRatio = newDiameter / originalDiameter;
+                const tdhRatio = Math.pow(diameterRatio, 2);
+                const powerRatio = Math.pow(diameterRatio, 3);
+
+                document.getElementById('diameterChange').textContent =
+                    `${((diameterRatio - 1) * 100).toFixed(1)}% (${originalDiameter} → ${newDiameter} mm)`;
+
+                document.getElementById('tdhChange').textContent =
+                    `${((tdhRatio - 1) * 100).toFixed(1)}%`;
+
+                document.getElementById('powerChange').textContent =
+                    `${((powerRatio - 1) * 100).toFixed(1)}%`;
+
+                document.getElementById('affinityResults').style.display = 'block';
+
+                // Previsualizar curva recalculada en el gráfico
+                this.previewAffinityCurve(recalculatedCurve);
+            };
+        }
+
+        if (confirmAffinityBtn) {
+            confirmAffinityBtn.onclick = () => {
+                if (recalculatedCurve) {
+                    // Guardar la nueva curva en el State
+                    State.set('pump.curve_points', recalculatedCurve);
+
+                    // Actualizar el diámetro del impulsor
+                    const newDiameter = parseFloat(newImpellerInput.value);
+                    State.set('pump.impeller_diameter', newDiameter);
+
+                    // Recargar el paso
+                    this.renderCurrentStep();
+
+                    // Mostrar mensaje de éxito (usando alert temporalmente, podría mejorarse)
+                    alert('Curva actualizada correctamente con reglas de afinidad');
+
+                    // Limpiar
+                    recalculatedCurve = null;
+                }
+            };
+        }
+
+        if (cancelAffinityBtn) {
+            cancelAffinityBtn.onclick = () => {
+                recalculatedCurve = null;
+                document.getElementById('affinityResults').style.display = 'none';
+                newImpellerInput.value = State.get('pump.impeller_diameter');
+                // Recargar gráfico para eliminar previsualización
+                this.renderPumpCurvePreviewChart();
+            };
+        }
     },
 
     // Función para renderizar el gráfico de previsualización en el Paso 5
@@ -1447,6 +1620,45 @@ const StepManager = {
 
         // Ajustar altura del contenedor si es necesario por CSS
         ctx.style.height = '300px';
+    },
+
+    /**
+     * Previsualiza la curva recalculada sobre el gráfico existente
+     * @param {Array} newCurve - Nueva curva calculada
+     */
+    previewAffinityCurve(newCurve) {
+        const ctx = document.getElementById('pumpCurvePreviewChart');
+        if (!ctx) return;
+
+        const chart = Chart.getChart(ctx);
+        if (!chart) return;
+
+        // Obtener la curva actual
+        const currentCurve = State.get('pump.curve_points') || [];
+        const flowUnitLabel = State.getFlowUnitLabel();
+
+        // Ordenar la nueva curva por flujo
+        const sortedNewCurve = [...newCurve].sort((a, b) => a.flow - b.flow);
+
+        // Agregar la curva de previsualización como un segundo dataset
+        chart.data.datasets.push({
+            label: 'Nueva Curva (Previsualización)',
+            data: sortedNewCurve.map(p => ({
+                x: State.L_sToFlow(p.flow),
+                y: p.TDH
+            })),
+            borderColor: '#FF5252', // Color rojo para diferenciar
+            backgroundColor: 'rgba(255, 82, 82, 0.1)',
+            borderWidth: 2,
+            borderDash: [5, 5], // Línea punteada
+            tension: 0.4,
+            pointRadius: 4,
+            pointBackgroundColor: '#FF5252',
+            pointBorderColor: '#fff',
+            fill: false
+        });
+
+        chart.update();
     },
 
     initStep6Events() {

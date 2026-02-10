@@ -854,6 +854,54 @@ function displayValidationErrors(errors, container) {
     });
 }
 
+/**
+ * Valida que el diámetro del impulsor esté dentro de rangos aceptables
+ * @param {number} originalDiameter - Diámetro original del impulsor (mm)
+ * @param {number} newDiameter - Nuevo diámetro propuesto (mm)
+ * @returns {Object} Resultado de validación {valid, errors[], warnings[]}
+ */
+function validateImpellerDiameter(originalDiameter, newDiameter) {
+    const errors = [];
+    const warnings = [];
+
+    // Validaciones básicas
+    if (!newDiameter || newDiameter <= 0) {
+        errors.push('El diámetro debe ser un número positivo');
+        return { valid: false, errors, warnings };
+    }
+
+    if (newDiameter < 50) {
+        errors.push('El diámetro mínimo es 50 mm');
+    }
+
+    if (newDiameter > 1000) {
+        errors.push('El diámetro máximo es 1000 mm');
+    }
+
+    // Advertencias de rangos típicos
+    if (originalDiameter && originalDiameter > 0) {
+        const ratio = newDiameter / originalDiameter;
+
+        if (ratio < 0.7) {
+            warnings.push('El diámetro es menor al 70% del original. La eficiencia puede disminuir significativamente.');
+        }
+
+        if (ratio > 1.2) {
+            warnings.push('El diámetro es mayor al 120% del original. Verificar compatibilidad con la carcasa.');
+        }
+
+        if (ratio < 0.5 || ratio > 1.5) {
+            warnings.push('El cambio de diámetro es extremo. Las reglas de afinidad pueden no ser precisas.');
+        }
+    }
+
+    return {
+        valid: errors.length === 0,
+        errors,
+        warnings
+    };
+}
+
 // Exportar funciones para uso global
 if (typeof window !== 'undefined') {
     window.Validator = {
@@ -867,6 +915,7 @@ if (typeof window !== 'undefined') {
         validateSystemIntegrity,
         validatePipeVelocity,
         validateSystemVelocities,
+        validateImpellerDiameter,
         formatValidationErrors,
         displayValidationErrors
     };

@@ -850,6 +850,50 @@ function calculateSensitivity(base, plus, minus, variation) {
     };
 }
 
+/**
+ * Aplica reglas de afinidad de bombas para recalcular curva
+ * @param {Array} originalCurve - Curva original de puntos [{flow, TDH, NPSHr, efficiency, power}]
+ * @param {number} originalDiameter - Diámetro original del impulsor (mm)
+ * @param {number} newDiameter - Nuevo diámetro del impulsor (mm)
+ * @returns {Array} Nueva curva con puntos recalculados
+ */
+function applyAffinityLaws(originalCurve, originalDiameter, newDiameter) {
+    if (!originalCurve || originalCurve.length === 0) {
+        return [];
+    }
+
+    if (!originalDiameter || originalDiameter <= 0 || !newDiameter || newDiameter <= 0) {
+        console.error('Diámetros inválidos para reglas de afinidad');
+        return originalCurve;
+    }
+
+    const diameterRatio = newDiameter / originalDiameter;
+
+    return originalCurve.map(point => {
+        // Aplicar reglas de afinidad
+        // Q2 = Q1 × (D2/D1)
+        const newFlow = point.flow * diameterRatio;
+
+        // H2 = H1 × (D2/D1)²
+        const newTDH = point.TDH * Math.pow(diameterRatio, 2);
+
+        // P2 = P1 × (D2/D1)³
+        let newPower = point.power;
+        if (point.power && point.power > 0) {
+            newPower = point.power * Math.pow(diameterRatio, 3);
+        }
+
+        // NPSHr y eficiencia se mantienen constantes
+        return {
+            flow: newFlow,
+            TDH: newTDH,
+            NPSHr: point.NPSHr,
+            efficiency: point.efficiency,
+            power: newPower
+        };
+    });
+}
+
 // Exportar funciones para uso global
 if (typeof window !== 'undefined') {
     // Re-exportar calculatePulpDensity desde pulpa.js (si está disponible)
@@ -874,4 +918,5 @@ if (typeof window !== 'undefined') {
     window.calculateSensitivity = calculateSensitivity;
     window.calculateSectionVelocity = calculateSectionVelocity;
     window.calculateSystemVelocities = calculateSystemVelocities;
+    window.applyAffinityLaws = applyAffinityLaws;
 }

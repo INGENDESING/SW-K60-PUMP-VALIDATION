@@ -3,6 +3,33 @@ Sistema de Cálculo Hidráulico para Bombas de Pulpa
 
 Todos los cambios notables en este proyecto se documentarán en este archivo.
 
+## [Versión 2.1.0] - 2026-02-10
+
+### NUEVA FUNCIONALIDAD - Reglas de Afinidad de Bombas
+- **Visualización del impulsor**: Agregada tarjeta en Paso 5 mostrando diámetro, RPM y tipo
+- **Reglas de Afinidad**: Implementada funcionalidad para recalcular curva al cambiar diámetro del impulsor
+- **Previsualización**: Gráfico muestra curva original y nueva curva calculada
+- **Confirmación**: Usuario puede confirmar o cancelar antes de reemplazar la curva
+
+### DETALLES TÉCNICOS
+- **scripts/calculations.js**: Nueva función `applyAffinityLaws()` implementando fórmulas:
+  - Q2 = Q1 × (D2/D1) - Flujo proporcional
+  - H2 = H1 × (D2/D1)² - TDH proporcional al cuadrado
+  - P2 = P1 × (D2/D1)³ - Potencia proporcional al cubo
+- **scripts/ui.js**:
+  - `getStep5Template()`: Agregadas tarjetas de información y control de reglas de afinidad
+  - `initStep5Events()`: Event listeners para aplicar, confirmar y cancelar
+  - `previewAffinityCurve()`: Función para previsualizar nueva curva en gráfico
+- **scripts/validation.js**: Nueva función `validateImpellerDiameter()` para validar rangos
+
+### REGLAS DE AFINIDAD IMPLEMENTADAS
+- Cambio en diámetro del impulsor (D1 → D2) a RPM constantes
+- Rango típico soportado: 70% - 120% del diámetro original
+- Advertencias para cambios extremos (< 50% o > 150%)
+- NPSHr y eficiencia se mantienen constantes (aproximación razonable)
+
+---
+
 ## [Versión 2.0.8] - 2026-02-10
 
 ### CORREGIDO (SyntaxError - Error de sintaxis en ui.js)
