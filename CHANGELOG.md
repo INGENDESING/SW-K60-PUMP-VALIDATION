@@ -3,6 +3,19 @@ Sistema de Cálculo Hidráulico para Bombas de Pulpa
 
 Todos los cambios notables en este proyecto se documentarán en este archivo.
 
+## [Versión 2.0.8] - 2026-02-10
+
+### CORREGIDO (SyntaxError - Error de sintaxis en ui.js)
+- **Llave extra**: Eliminada llave de cierre sobrante en updateSummary()
+- **Contexto**: Error de sintaxis impedía cargar la aplicación
+- **Error**: `Uncaught SyntaxError: Missing initializer in const declaration`
+
+### DETALLES TÉCNICOS
+- `scripts/ui.js`: Eliminada llave extra en línea 1542
+- El error fue introducido accidentalmente en la corrección v2.0.7
+
+---
+
 ## [Versión 2.0.7] - 2026-02-10
 
 ### CORREGIDO (UX - Sidebar y Selectores de Tubería)

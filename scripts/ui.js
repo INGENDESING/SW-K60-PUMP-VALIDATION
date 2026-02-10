@@ -1539,7 +1539,6 @@ const StepManager = {
             </div>`;
 
         summaryContainer.innerHTML = summaryHTML;
-        }
     },
 
     // ===== EVENTOS GLOBALES =====
