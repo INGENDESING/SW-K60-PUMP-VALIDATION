@@ -852,6 +852,11 @@ function calculateSensitivity(base, plus, minus, variation) {
 
 // Exportar funciones para uso global
 if (typeof window !== 'undefined') {
+    // Re-exportar calculatePulpDensity desde pulpa.js (si está disponible)
+    if (typeof window.calculatePulpDensity === 'undefined' && typeof calculatePulpDensity === 'function') {
+        window.calculatePulpDensity = calculatePulpDensity;
+    }
+
     window.calculateFrictionFactor = calculateFrictionFactor;
     window.calculatePulpFrictionFactor = calculatePulpFrictionFactor;
     window.calculateReynolds = calculateReynolds;

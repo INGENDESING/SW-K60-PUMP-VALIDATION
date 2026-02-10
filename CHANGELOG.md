@@ -3,6 +3,21 @@ Sistema de Cálculo Hidráulico para Bombas de Pulpa
 
 Todos los cambios notables en este proyecto se documentarán en este archivo.
 
+## [Versión 2.0.2] - 2026-02-10
+
+### CORREGIDO (Crítico - Dependencias Faltantes)
+- **Funciones de conversión de flujo**: Agregadas `flowUnit_to_L_s` y `L_s_to_flowUnit` en utils.js
+- **Chart.js global**: Asignado Chart a window.Chart para disponibilidad global
+- **calculatePulpDensity**: Re-exportada desde pulpa.js en calculations.js
+- **Dependencias faltantes**: Corregidas las 4 dependencias que impedían inicialización
+
+### CAMBIOS TÉCNICOS
+- `scripts/utils.js`: Agregadas 2 funciones de conversión de flujo y sus exportaciones
+- `index.html`: Agregado script inline para asignar Chart globalmente
+- `scripts/calculations.js`: Agregada re-exportación de calculatePulpDensity
+
+---
+
 ## [Versión 2.0.1] - 2026-02-10
 
 ### CORREGIDO (Crítico - Errores de JavaScript)

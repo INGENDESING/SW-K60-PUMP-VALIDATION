@@ -13,6 +13,38 @@ const PHYSICAL_CONSTANTS = {
     P_atm_bar: 1.01325       // Presión atmosférica (bar)
 };
 
+// ===== FUNCIONES DE CONVERSIÓN DE FLUJO =====
+
+/**
+ * Convertir desde unidad de flujo a L/s
+ * @param {number} value - Valor en unidad origen
+ * @param {string} unit - Unidad origen ('m3_h', 'gpm', 'L_s')
+ * @returns {number} Valor en L/s
+ */
+function flowUnit_to_L_s(value, unit) {
+    switch(unit) {
+        case 'm3_h': return value / 3.6;
+        case 'gpm': return value / 15.8503;
+        case 'L_s': return value;
+        default: return value;
+    }
+}
+
+/**
+ * Convertir desde L/s a unidad de flujo
+ * @param {number} value_L_s - Valor en L/s
+ * @param {string} unit - Unidad destino ('m3_h', 'gpm', 'L_s')
+ * @returns {number} Valor convertido
+ */
+function L_s_to_flowUnit(value_L_s, unit) {
+    switch(unit) {
+        case 'm3_h': return value_L_s * 3.6;
+        case 'gpm': return value_L_s * 15.8503;
+        case 'L_s': return value_L_s;
+        default: return value_L_s;
+    }
+}
+
 // ===== FUNCIONES MATEMÁTICAS =====
 
 /**
@@ -588,6 +620,8 @@ function on(element, event, handler) {
 // Exportar funciones para uso global
 if (typeof window !== 'undefined') {
     window.PHYSICAL_CONSTANTS = PHYSICAL_CONSTANTS;
+    window.flowUnit_to_L_s = flowUnit_to_L_s;
+    window.L_s_to_flowUnit = L_s_to_flowUnit;
     window.linearInterpolation = linearInterpolation;
     window.bilinearInterpolation = bilinearInterpolation;
     window.solveBisection = solveBisection;
