@@ -840,9 +840,6 @@ const StepManager = {
 
                 // Actualizar resumen
                 this.updateSummary();
-
-                // Indicar al usuario que se guardó
-                this.validateStep(1);
             });
         }
 

@@ -3,6 +3,19 @@ Sistema de Cálculo Hidráulico para Bombas de Pulpa
 
 Todos los cambios notables en este proyecto se documentarán en este archivo.
 
+## [Versión 2.0.3] - 2026-02-10
+
+### CORREGIDO (Crítico - TypeError en UI)
+- **Llamada a función inexistente**: Eliminada llamada a `this.validateStep(1)` que causaba TypeError
+- **Contexto**: El error ocurría al ingresar el valor del flujo en el Paso 1
+- **Causa**: La función `validateStep` no existe en `StepManager`
+- **Solución**: Eliminada la llamada innecesaria en ui.js línea 845
+
+### CAMBIOS TÉCNICOS
+- `scripts/ui.js`: Eliminadas líneas 844-845 (comentario y llamada a validateStep)
+
+---
+
 ## [Versión 2.0.2] - 2026-02-10
 
 ### CORREGIDO (Crítico - Dependencias Faltantes)
