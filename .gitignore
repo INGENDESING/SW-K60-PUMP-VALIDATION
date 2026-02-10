@@ -1,0 +1,26 @@
+# Archivos generados
+node_modules/
+dist/
+build/
+
+# Archivos de log
+*.log
+npm-debug.log*
+
+# Archivos temporales
+.DS_Store
+Thumbs.db
+*.tmp
+~*
+
+# Configuración local
+.env.local
+.env.*.local
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Datos de prueba
+PRUEBAS_*.md
+test_*.html

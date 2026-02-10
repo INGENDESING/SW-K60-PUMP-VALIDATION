@@ -1,0 +1,576 @@
+/**
+ * ESTILOS PRINCIPALES - P2603 SW-K60
+ * Layouts específicos y componentes de la aplicación
+ */
+
+/* ===== PASO 1: DATOS DEL PROCESO ===== */
+.step-process {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+}
+
+.process-card {
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    padding: var(--space-lg);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-normal);
+}
+
+.process-card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-md);
+}
+
+.process-card-icon {
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent-primary-bg, rgba(0, 191, 165, 0.1));
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-md);
+    color: var(--accent-primary);
+}
+
+.process-card h4 {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-sm);
+}
+
+/* ===== PASO 2 & 3: TUBERÍAS ===== */
+.pipe-section {
+    margin-bottom: var(--space-2xl);
+}
+
+.pipe-section-title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin-bottom: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.pipe-dimensions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.dimension-display {
+    background-color: var(--bg-tertiary);
+    padding: var(--space-md);
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.dimension-label {
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+}
+
+.dimension-value {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--accent-primary);
+    font-family: var(--font-mono);
+}
+
+.dimension-unit {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
+
+/* ===== ACCESORIOS ===== */
+.accessories-section {
+    margin-top: var(--space-lg);
+}
+
+.accessories-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+}
+
+.accessories-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.accessories-table th {
+    background-color: var(--bg-tertiary);
+    padding: var(--space-sm) var(--space-md);
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.accessories-table td {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.accessory-select {
+    min-width: 200px;
+}
+
+.quantity-input {
+    width: 80px;
+}
+
+.remove-accessory-btn {
+    color: var(--color-critical);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-xs);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.remove-accessory-btn:hover {
+    background-color: var(--color-critical-bg);
+}
+
+/* ===== PASO 4: DATOS DE BOMBA ===== */
+.pump-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+}
+
+.pump-specifications {
+    background-color: var(--bg-tertiary);
+    padding: var(--space-lg);
+    border-radius: var(--border-radius);
+}
+
+.pump-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-tertiary);
+    padding: var(--space-xl);
+    border-radius: var(--border-radius);
+    min-height: 300px;
+}
+
+.pump-placeholder {
+    text-align: center;
+    color: var(--text-muted);
+}
+
+/* ===== PASO 5: CURVA CARACTERÍSTICA ===== */
+.curve-inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.curve-points-list {
+    margin-top: var(--space-lg);
+}
+
+.curve-point-item {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr 1fr 1fr 40px;
+    gap: var(--space-sm);
+    align-items: center;
+    padding: var(--space-sm);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--space-sm);
+}
+
+/* ===== PASO 6: CONDICIONES DE OPERACIÓN ===== */
+.conditions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+}
+
+.condition-card {
+    background-color: var(--bg-tertiary);
+    padding: var(--space-lg);
+    border-radius: var(--border-radius);
+}
+
+.condition-card h4 {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-md);
+    color: var(--accent-primary);
+}
+
+.condition-value {
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+}
+
+.condition-unit {
+    font-size: var(--text-base);
+    color: var(--text-muted);
+    margin-left: var(--space-xs);
+}
+
+/* ===== RESULTADOS ===== */
+.results-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.result-card {
+    background-color: var(--bg-tertiary);
+    padding: var(--space-lg);
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.result-card-value {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    font-family: var(--font-mono);
+    margin-bottom: var(--space-xs);
+}
+
+.result-card-label {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+.result-card.success .result-card-value {
+    color: var(--color-success);
+}
+
+.result-card.warning .result-card-value {
+    color: var(--color-warning);
+}
+
+.result-card.error .result-card-value {
+    color: var(--color-critical);
+}
+
+/* ===== CHARTS ===== */
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--space-lg);
+    margin-bottom: var(--space-lg);
+}
+
+.chart-wrapper {
+    background-color: var(--bg-tertiary);
+    padding: var(--space-lg);
+    border-radius: var(--border-radius);
+}
+
+.chart-wrapper h4 {
+    font-size: var(--text-base);
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
+.chart-canvas {
+    width: 100% !important;
+    height: 500px !important; /* Aumentar altura base */
+    max-height: 60vh; /* Limitar a 60% de la altura de pantalla */
+}
+
+/* Ajuste para pantallas pequeñas */
+@media (max-width: 768px) {
+    .chart-canvas {
+        height: 350px !important;
+    }
+}
+
+/* ===== TABLA DE RESULTADOS ===== */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: var(--space-lg);
+}
+
+.results-table thead {
+    background-color: var(--accent-primary);
+    color: var(--bg-primary);
+}
+
+.results-table th {
+    padding: var(--space-md);
+    text-align: left;
+    font-weight: 600;
+}
+
+.results-table td {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.results-table tbody tr:hover {
+    background-color: var(--bg-hover);
+}
+
+.results-table .section-header {
+    background-color: var(--bg-tertiary);
+    font-weight: 600;
+    color: var(--accent-primary);
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes pulse-green {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(105, 240, 174, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(105, 240, 174, 0);
+    }
+}
+
+@keyframes pulse-yellow {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255, 183, 77, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(255, 183, 77, 0);
+    }
+}
+
+@keyframes pulse-red {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+    }
+}
+
+.status-indicator {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: var(--space-sm);
+}
+
+.status-indicator.green {
+    background-color: var(--color-success);
+    animation: pulse-green 2s infinite;
+}
+
+.status-indicator.yellow {
+    background-color: var(--color-warning);
+    animation: pulse-yellow 2s infinite;
+}
+
+.status-indicator.red {
+    background-color: var(--color-critical);
+    animation: pulse-red 2s infinite;
+}
+
+/* ===== VALIDACIÓN EN TIEMPO REAL ===== */
+.input-validating {
+    position: relative;
+}
+
+.input-validating::after {
+    content: '';
+    position: absolute;
+    right: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--accent-primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.input-validated {
+    padding-right: calc(var(--space-md) * 3);
+}
+
+.input-validated::before {
+    content: '✓';
+    position: absolute;
+    right: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-success);
+    font-weight: bold;
+}
+
+/* ===== SUGERENCIAS AUTOMÁTICAS ===== */
+.suggestions-list {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--accent-secondary);
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-sm) 0;
+}
+
+.suggestion-icon {
+    color: var(--accent-secondary);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.suggestion-text {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+/* ===== COMPARACIÓN DE ESCENARIOS ===== */
+.scenario-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+}
+
+.scenario-column {
+    background-color: var(--bg-tertiary);
+    padding: var(--space-lg);
+    border-radius: var(--border-radius);
+}
+
+.scenario-title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-md);
+    text-align: center;
+}
+
+.scenario-current {
+    border: 2px solid var(--accent-primary);
+}
+
+.scenario-proposed {
+    border: 2px solid var(--accent-secondary);
+}
+
+/* ===== HISTORIAL DE CÁLCULOS ===== */
+.history-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--space-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.history-item:hover {
+    background-color: var(--bg-hover);
+}
+
+.history-item-date {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
+
+.history-item-title {
+    font-weight: 600;
+    flex: 1;
+    margin: 0 var(--space-md);
+}
+
+/* ===== CARGA DE ARCHIVOS ===== */
+.file-upload {
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius);
+    padding: var(--space-2xl);
+    text-align: center;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.file-upload:hover,
+.file-upload.drag-over {
+    border-color: var(--accent-primary);
+    background-color: var(--accent-primary-bg, rgba(0, 191, 165, 0.05));
+}
+
+.file-upload-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+}
+
+.file-upload-text {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+}
+
+.file-upload-hint {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+}
+
+/* ===== RESPONSIVE ADICIONAL ===== */
+@media (max-width: 768px) {
+    .pump-info {
+        grid-template-columns: 1fr;
+    }
+
+    .curve-point-item {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+
+    .scenario-comparison {
+        grid-template-columns: 1fr;
+    }
+
+    .results-overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .results-overview {
+        grid-template-columns: 1fr;
+    }
+
+    .dimension-display {
+        padding: var(--space-sm);
+    }
+
+    .dimension-value {
+        font-size: var(--text-xl);
+    }
+}

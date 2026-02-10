@@ -1,0 +1,130 @@
+╔══════════════════════════════════════════════════════════════════╗
+║                    INSTRUCCIONES - P2603 SW-K60                         ║
+║              Cálculo Hidráulico de Bombas de Pulpa                       ║
+╚══════════════════════════════════════════════════════════════════╝
+
+📍 APLICACIÓN ACTIVA EN: http://localhost:8000
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📂 UBICACIÓN DE ARCHIVOS:
+   C:\Users\ingen\OneDrive\1.0 PROYECTOS DML\CARTON COLOMBIA\P2603 SW-K60\Desarrollo aplicacion\sw-k60\
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🚀 FORMAS DE ABRIR LA APLICACIÓN:
+
+   MÉTODO 1 (Más simple):
+   1. Ve a la carpeta sw-k60
+   2. Haz doble clic en el archivo "index.html"
+   3. La aplicación se abrirá en tu navegador
+
+   MÉTODO 2 (Con servidor - Recomendado):
+   1. El servidor ya debería estar corriendo en http://localhost:8000
+   2. Abre esa URL en tu navegador
+   3. La aplicación cargará con todos los estilos y funciones
+
+   MÉTODO 3 (Si el servidor se detuvo):
+   1. Abre una terminal en la carpeta sw-k60
+   2. Ejecuta: python server.py
+   3. Abre http://localhost:8000 en tu navegador
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 INSTRUCCIONES DE USO:
+
+   PASO 1: Datos del Proceso
+   - Selecciona el tipo de pulpa
+   - Ingresa consistencia (%), temperatura (°C)
+   - Opcional: pH, °SR, contenido de aire
+
+   PASO 2: Tubería de Succión
+   - Selecciona norma (ANSI, PVC)
+   - Diámetro (2" - 24")
+   - Cédula (40, 80, 10S, 40S, 80S)
+   - Longitud de tubería
+   - Agrega accesorios (codos, válvulas, etc.)
+
+   PASO 3: Tubería de Descarga
+   - Mismos campos que succión
+
+   PASO 4: Datos de Bomba
+   - Fabricante, modelo, tipo
+   - Diámetro de impulsor (mm)
+   - Velocidad (RPM)
+   - Flujo de diseño (L/s)
+
+   PASO 5: Curva Característica
+   - Agrega al menos 3 puntos de la curva H-Q
+   - Flujo (L/s), TDH (m), NPSHr (m), Eficiencia (%)
+
+   PASO 6: Condiciones de Operación
+   - Presión en tanque de succión (bar)
+   - Elevación de succión (m)
+   - Presión de descarga (bar)
+   - Elevación de descarga (m)
+
+   PASO 7: Resultados
+   - Revisar cálculo completo
+   - Verificar gráficos
+   - Imprimir reporte técnico
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+💡 DATOS DE PRUEBA RÁPIDA:
+
+   Para probar la aplicación rápidamente, puedes usar:
+
+   PASO 1: Datos del Proceso
+   → Tipo de pulpa: Kraft Blanqueada de Pino
+   → Consistencia: 3.0%
+   → Temperatura: 20°C
+
+   PASO 2: Succión
+   → Norma: ANSI B36.10
+   → Diámetro: 6"
+   → Cédula: 40
+   → Longitud: 10 m
+   → Agregar 1 codo 90° estándar
+
+   PASO 3: Descarga
+   → Norma: ANSI B36.10
+   → Diámetro: 4"
+   → Cédula: 40
+   → Longitud: 50 m
+   → Agregar 1 codo 90° estándar
+
+   PASO 4: Bomba
+   → Flujo: 150 L/s
+   → Impulsor: 300 mm
+   → RPM: 1750
+
+   PASO 5: Curva (ya tiene datos precargados)
+
+   PASO 6: Condiciones
+   → Presión succión: 0 bar
+   → Elevación succión: -2 m
+   → Presión descarga: 2 bar
+   → Elevación descarga: 15 m
+
+   PASO 7: Ver resultados
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🛑 DETENER SERVIDOR:
+
+   Presiona Ctrl+C en la terminal donde se está ejecutando el servidor
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📋 CONTACTO SOPORTE:
+
+   DML INGENIEROS
+   proyectos2@dmlsas.com
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📅 FECHA: 2025-02-04
+📋 VERSIÓN: 1.0
+
+════════════════════════════════════════════════════════════════════

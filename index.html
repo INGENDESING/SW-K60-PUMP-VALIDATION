@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P2603 SW-K60 - Cálculo Hidráulico de Bombas de Pulpa</title>
+    <meta name="description" content="Aplicación para evaluación y especificación de bombas de pulpa de papel">
+    <meta name="author" content="DML INGENIEROS - Jonathan Arboleda Genes, Herminsul Rosero">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Fuentes Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="styles/theme.css?v=20260205b">
+    <link rel="stylesheet" href="styles/main.css?v=20260205b">
+    <link rel="stylesheet" href="styles/components.css?v=20260205b">
+    <link rel="stylesheet" href="styles/print.css?v=20260205b">
+
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logos">
+            <img src="assets/images/DML.png" alt="DML Ingenieros" class="logo-dml">
+            <img src="assets/images/SW.png" alt="Smurfit Westrock" class="logo-sw">
+        </div>
+        <div class="header-title">
+            <h1>P2603 SW-K60</h1>
+            <p>Cálculo Hidráulico de Bombas de Pulpa</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn-icon" id="btnHelp" title="Ayuda">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </button>
+            <button class="btn-icon" id="btnAbout" title="Acerca de">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Navegación de pasos (Stepper) -->
+    <nav class="stepper">
+        <div class="stepper-track">
+            <div class="stepper-item active" data-step="1">
+                <div class="stepper-number">1</div>
+                <div class="stepper-label">Datos<br>Proceso</div>
+            </div>
+            <div class="stepper-line"></div>
+            <div class="stepper-item" data-step="2">
+                <div class="stepper-number">2</div>
+                <div class="stepper-label">Tubería<br>Succión</div>
+            </div>
+            <div class="stepper-line"></div>
+            <div class="stepper-item" data-step="3">
+                <div class="stepper-number">3</div>
+                <div class="stepper-label">Tubería<br>Descarga</div>
+            </div>
+            <div class="stepper-line"></div>
+            <div class="stepper-item" data-step="4">
+                <div class="stepper-number">4</div>
+                <div class="stepper-label">Datos<br>Bomba</div>
+            </div>
+            <div class="stepper-line"></div>
+            <div class="stepper-item" data-step="5">
+                <div class="stepper-number">5</div>
+                <div class="stepper-label">Curva<br>Bomba</div>
+            </div>
+            <div class="stepper-line"></div>
+            <div class="stepper-item" data-step="6">
+                <div class="stepper-number">6</div>
+                <div class="stepper-label">Condiciones<br>Operación</div>
+            </div>
+            <div class="stepper-line"></div>
+            <div class="stepper-item" data-step="7">
+                <div class="stepper-number">7</div>
+                <div class="stepper-label">Resultados</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido principal -->
+    <main class="main">
+        <!-- Panel lateral -->
+        <aside class="sidebar">
+            <div class="sidebar-card">
+                <h3>Resumen de Progreso</h3>
+                <div class="progress-indicator">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 14%"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">Paso 1 de 7</span>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h3>Datos Ingresados</h3>
+                <div class="data-summary" id="dataSummary">
+                    <p class="text-muted">Complete el formulario para ver el resumen</p>
+                </div>
+            </div>
+
+            <div class="sidebar-card">
+                <h3>Acciones</h3>
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" id="btnExport">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Exportar Datos
+                    </button>
+                    <button class="btn btn-secondary" id="btnImport">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        Importar Datos
+                    </button>
+                    <button class="btn btn-secondary" id="btnSave">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                            <polyline points="7 3 7 8 15 8"></polyline>
+                        </svg>
+                        Guardar Progreso
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Panel principal -->
+        <section class="content">
+            <!-- Formulario de pasos -->
+            <div class="step-form" id="stepForm">
+                <!-- Los formularios de cada paso se cargarán dinámicamente -->
+            </div>
+
+            <!-- Botones de navegación -->
+            <div class="form-actions">
+                <button class="btn btn-secondary" id="btnPrevious" disabled>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    Anterior
+                </button>
+                <button class="btn btn-primary" id="btnNext">
+                    Siguiente
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 DML INGENIEROS para Smurfit Westrock Colombia</p>
+        <p>Autores: Ing. Jonathan Arboleda Genes | Ing. Herminsul Rosero</p>
+        <p>Proyecto: P2603 SW-K60 | Cálculo Hidráulico de Bombas de Pulpa</p>
+    </footer>
+
+    <!-- Modal de resultados -->
+    <div class="modal" id="resultsModal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2>Resultados del Cálculo</h2>
+                <button class="btn-icon" id="btnCloseModal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body" id="resultsBody">
+                <!-- Contenido de resultados -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btnPrintReport">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                        <rect x="6" y="14" width="12" height="8"></rect>
+                    </svg>
+                    Imprimir Reporte
+                </button>
+                <button class="btn btn-secondary" id="btnExportPDF">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="12" y1="18" x2="12" y2="12"></line>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                    Exportar PDF
+                </button>
+                <button class="btn btn-primary" id="btnNewCalculation">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    Nuevo cálculo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de selección de accesorios -->
+    <div class="modal" id="fittingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Agregar Accesorio</h2>
+                <button class="btn-icon close-modal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Contenido dinámico -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelFitting">Cancelar</button>
+                <button class="btn btn-primary" id="confirmFitting">Agregar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data/tuberias.js?v=20260205c"></script>
+
+    <script src="data/accesorios.js?v=20260205b"></script>
+    <script src="data/pulpa.js?v=20260205b"></script>
+    <script src="data/propiedades.js?v=20260205b"></script>
+    <script src="scripts/utils.js?v=20260205b"></script>
+    <script src="scripts/calculations.js?v=20260205b"></script>
+    <script src="scripts/validation.js?v=20260205b"></script>
+    <script src="scripts/state.js?v=20260205d"></script>
+    <script src="scripts/ui.js?v=20260205d"></script>
+    <script src="scripts/main.js?v=20260205d"></script>
+</body>
+
+
+</html>

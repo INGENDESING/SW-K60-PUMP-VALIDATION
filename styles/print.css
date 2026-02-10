@@ -1,0 +1,472 @@
+/**
+ * ESTILOS DE IMPRESIÓN - P2603 SW-K60
+ * Formato carta para reportes técnicos
+ */
+
+@media print {
+
+    /* ===== CONFIGURACIÓN GENERAL ===== */
+    @page {
+        size: letter;
+        margin: 0.5in;
+    }
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    body {
+        background-color: white !important;
+        color: black !important;
+        font-size: 11pt;
+        line-height: 1.3;
+    }
+
+    /* ===== OCULTAR ELEMENTOS ===== */
+    .header,
+    .stepper,
+    .sidebar,
+    .form-actions,
+    .footer,
+    .btn,
+    .modal-footer,
+    .no-print {
+        display: none !important;
+    }
+
+    /* ===== MODAL EN IMPRESIÓN ===== */
+    .modal {
+        position: static !important;
+        background-color: white !important;
+        padding: 0 !important;
+    }
+
+    .modal-content {
+        box-shadow: none !important;
+        border: none !important;
+        max-width: 100% !important;
+        max-height: none !important;
+        margin: 0 !important;
+    }
+
+    .modal-header {
+        padding: 0.25in 0;
+        border-bottom: 2pt solid #000;
+    }
+
+    .modal-body {
+        padding: 0.25in 0;
+    }
+
+    .modal-header h2 {
+        color: black !important;
+        font-size: 16pt;
+    }
+
+    /* ===== PORTADA ===== */
+    .print-cover {
+        page-break-after: always;
+        min-height: 9.5in;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1in 0.5in;
+    }
+
+    .print-cover-header {
+        text-align: left;
+    }
+
+    .print-cover-title {
+        text-align: center;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .print-cover-title h1 {
+        font-size: 24pt;
+        font-weight: bold;
+        margin-bottom: 0.25in;
+        color: black !important;
+    }
+
+    .print-cover-title h2 {
+        font-size: 14pt;
+        color: black !important;
+    }
+
+    .print-cover-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .print-cover-info {
+        font-size: 11pt;
+    }
+
+    .print-cover-info p {
+        margin: 0.125in 0;
+    }
+
+    .print-cover-logos {
+        display: flex;
+        gap: 0.5in;
+    }
+
+    .print-logo-dml {
+        height: 1in;
+        width: auto;
+    }
+
+    .print-logo-sw {
+        height: 0.8in;
+        width: auto;
+    }
+
+    /* ===== SECCIONES DE REPORTE ===== */
+    .print-section {
+        page-break-inside: avoid;
+        margin-bottom: 0.25in;
+    }
+
+    .print-section-title {
+        font-size: 14pt;
+        font-weight: bold;
+    }
+
+    .print-subsection-title {
+        font-size: 12pt;
+        font-weight: bold;
+        margin-top: 0.2in;
+        margin-bottom: 0.1in;
+        color: black !important;
+    }
+
+    /* ===== TABLAS ===== */
+    .print-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0.15in 0;
+        font-size: 10pt;
+    }
+
+    .print-table th,
+    .print-table td {
+        padding: 0.08in 0.1in;
+        border: 1pt solid #000;
+        text-align: left;
+    }
+
+    .print-table th {
+        background-color: #e0e0e0 !important;
+        font-weight: bold;
+        color: black !important;
+    }
+
+    .print-table td {
+        color: black !important;
+    }
+
+    .print-table-header {
+        background-color: #00BFA5 !important;
+        color: white !important;
+        font-weight: bold;
+    }
+
+    .print-table-section {
+        background-color: #f5f5f5 !important;
+        font-weight: bold;
+    }
+
+    /* ===== DATOS DEL PROCESO ===== */
+    .print-process-data {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.2in;
+        margin: 0.15in 0;
+    }
+
+    .print-data-item {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1pt solid #ccc;
+        padding: 0.05in 0;
+    }
+
+    .print-data-label {
+        font-weight: bold;
+    }
+
+    .print-data-value {
+        font-family: 'Courier New', monospace;
+    }
+
+    /* ===== RESULTADOS ===== */
+    .print-results-summary {
+        border: 2pt solid #000;
+        padding: 0.15in;
+        margin: 0.2in 0;
+    }
+
+    .print-result-item {
+        display: flex;
+        justify-content: space-between;
+        margin: 0.08in 0;
+    }
+
+    .print-result-label {
+        font-weight: bold;
+    }
+
+    .print-result-value {
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+    }
+
+    .print-result-value.success {
+        color: #2E7D32 !important;
+    }
+
+    .print-result-value.warning {
+        color: #F57C00 !important;
+    }
+
+    .print-result-value.error {
+        color: #C62828 !important;
+    }
+
+    /* ===== GRÁFICOS ===== */
+    .print-chart {
+        width: 100% !important;
+        max-width: 7.5in;
+        /* Usar ancho casi completo de carta (8.5 - margenes) */
+        height: 5in !important;
+        /* Altura generosa para detalle */
+        margin: 0.3in auto;
+        page-break-inside: avoid;
+        display: block !important;
+    }
+
+    /* Forzar visibilidad de canvas en impresión */
+    canvas {
+        max-width: 100% !important;
+        max-height: 100% !important;
+    }
+
+    /* ===== CONCLUSIONES ===== */
+    .print-conclusions {
+        border: 1pt solid #000;
+        padding: 0.15in;
+        margin: 0.2in 0;
+        page-break-inside: avoid;
+    }
+
+    .print-conclusions-title {
+        font-weight: bold;
+        font-size: 12pt;
+        margin-bottom: 0.1in;
+    }
+
+    .print-conclusion-item {
+        margin: 0.08in 0;
+        padding-left: 0.2in;
+        text-indent: -0.2in;
+    }
+
+    .print-conclusion-item::before {
+        content: "• ";
+        font-weight: bold;
+    }
+
+    /* ===== CURVA CARACTERÍSTICA ===== */
+    .print-curve-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0.15in 0;
+        font-size: 9pt;
+    }
+
+    .print-curve-table th,
+    .print-curve-table td {
+        padding: 0.06in 0.08in;
+        border: 1pt solid #000;
+        text-align: center;
+    }
+
+    /* ===== PIE DE PÁGINA ===== */
+    .print-footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 9pt;
+        color: #666;
+        padding: 0.1in;
+        border-top: 1pt solid #ccc;
+    }
+
+    .print-footer-left {
+        position: fixed;
+        bottom: 0;
+        left: 0.5in;
+        font-size: 9pt;
+    }
+
+    .print-footer-right {
+        position: fixed;
+        bottom: 0;
+        right: 0.5in;
+        font-size: 9pt;
+    }
+
+    /* ===== CONTROL DE SALTOS DE PÁGINA ===== */
+    .page-break-before {
+        page-break-before: always;
+    }
+
+    .page-break-after {
+        page-break-after: always;
+    }
+
+    .page-break-inside-avoid {
+        page-break-inside: avoid;
+    }
+
+    /* ===== CLASES UTILITARIAS ===== */
+    .print-hidden {
+        display: none !important;
+    }
+
+    .print-bold {
+        font-weight: bold !important;
+    }
+
+    .print-italic {
+        font-style: italic !important;
+    }
+
+    .print-center {
+        text-align: center !important;
+    }
+
+    .print-right {
+        text-align: right !important;
+    }
+
+    .print-border {
+        border: 1pt solid #000 !important;
+    }
+
+    .print-border-bottom {
+        border-bottom: 1pt solid #000 !important;
+    }
+
+    .print-no-border {
+        border: none !important;
+    }
+
+    /* ===== AJUSTES ESPECÍFICOS ===== */
+    .alert {
+        border: 1pt solid #000 !important;
+        background-color: white !important;
+        color: black !important;
+    }
+
+    .card {
+        border: 1pt solid #000 !important;
+        box-shadow: none !important;
+    }
+
+    .badge {
+        border: 1pt solid #000 !important;
+        padding: 0.05in 0.1in !important;
+    }
+
+    /* ===== MATRIZ DE CÁLCULOS ===== */
+    .print-calculations-matrix {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 9pt;
+    }
+
+    .print-calculations-matrix th,
+    .print-calculations-matrix td {
+        padding: 0.06in 0.08in;
+        border: 1pt solid #000;
+    }
+
+    .print-calculations-matrix .row-header {
+        background-color: #f0f0f0 !important;
+        font-weight: bold;
+    }
+
+    .print-calculations-matrix .row-total {
+        background-color: #e0e0e0 !important;
+        font-weight: bold;
+    }
+
+    /* ===== NÚMEROS Y UNIDADES ===== */
+    .print-number {
+        font-family: 'Courier New', monospace;
+    }
+
+    .print-unit {
+        font-size: 0.9em;
+        color: #444;
+    }
+
+    /* ===== ENCABEZADOS DE PÁGINA (excepto portada) ===== */
+    @page :first {
+        @top-right {
+            content: "";
+        }
+
+        @top-left {
+            content: "";
+        }
+    }
+
+    @page {
+        @top-right {
+            content: "Página " counter(page) " de " counter(pages);
+            font-size: 9pt;
+        }
+
+        @top-left {
+            content: "P2603 SW-K60 - Cálculo Hidráulico de Bombas de Pulpa";
+            font-size: 9pt;
+        }
+    }
+
+    /* ===== AJUSTES FINALES ===== */
+    a {
+        color: black !important;
+        text-decoration: none !important;
+    }
+
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.9em;
+        color: #444;
+    }
+}
+
+/* ===== CLASES PARA CONTROLAR QUÉ SE IMPRIME ===== */
+.print-only {
+    display: none;
+}
+
+@media print {
+    .print-only {
+        display: block !important;
+    }
+
+    .screen-only {
+        display: none !important;
+    }
+}
